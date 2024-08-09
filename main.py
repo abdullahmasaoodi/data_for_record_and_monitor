@@ -5,7 +5,8 @@ from pandas import json_normalize
 import json
 from urllib.request import urlopen
 import numpy as np
-
+from flask import Flask, render_template
+app = Flask(__name__)
 #################################################################################    KSA        ########################################################################################################
 
 # main_saudi_stocks
@@ -351,4 +352,16 @@ summary_df_qatar_market = summary_df_qatar_market.rename(columns={
 
 ######################################################################################## the_final_resulted_df  ###########################################################################################################
 the_final_resulted_df = pd.concat([summary_combined_all_saudi_dfs,summary_df_of_UAE_dubai_and_abu_dhabi,summary_df_qatar_market])
-the_final_resulted_df 
+
+
+######################################################################################## showing_the_final_resulted_df_at_web_page  ###########################################################################################################
+
+@app.route('/')
+def home():
+    # تحويل الداتا فرام إلى HTML
+    table_html = the_final_resulted_df.to_html(classes='table table-striped', index=False)
+    # تمرير الجدول إلى قالب HTML
+    return render_template('table.html', table_html=table_html)
+
+if __name__ == '__main__':
+    app.run(debug=True)
