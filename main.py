@@ -351,3 +351,4 @@ summary_df_qatar_market = summary_df_qatar_market.rename(columns={
 
 ######################################################################################## the_final_resulted_df  ###########################################################################################################
 the_final_resulted_df = pd.concat([summary_combined_all_saudi_dfs,summary_df_of_UAE_dubai_and_abu_dhabi,summary_df_qatar_market])
+the_final_resulted_df 
