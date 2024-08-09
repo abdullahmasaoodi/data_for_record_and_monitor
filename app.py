@@ -363,5 +363,5 @@ def home():
     # تمرير الجدول إلى قالب HTML
     return render_template('table.html', table_html=table_html)
 
-if __name__ == '__main__':
+if __name__ == 'app':
     app.run(debug=True)
