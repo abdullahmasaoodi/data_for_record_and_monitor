@@ -6,6 +6,7 @@ import json
 from urllib.request import urlopen
 import numpy as np
 from flask import Flask, render_template
+import streamlit as st
 app = Flask(__name__)
 #################################################################################    KSA        ########################################################################################################
 
@@ -355,13 +356,14 @@ the_final_resulted_df = pd.concat([summary_combined_all_saudi_dfs,summary_df_of_
 
 
 ######################################################################################## showing_the_final_resulted_df_at_web_page  ###########################################################################################################
+st.dataframe(the_final_resulted_df)
 
-@app.route('/')
-def home():
-    # تحويل الداتا فرام إلى HTML
-    table_html = the_final_resulted_df.to_html(classes='table table-striped', index=False)
-    # تمرير الجدول إلى قالب HTML
-    return render_template('table.html', table_html=table_html)
+# @app.route('/')
+# def home():
+#     # تحويل الداتا فرام إلى HTML
+#     table_html = the_final_resulted_df.to_html(classes='table table-striped', index=False)
+#     # تمرير الجدول إلى قالب HTML
+#     return render_template('table.html', table_html=table_html)
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+# if __name__ == '__main__':
+#     app.run(host='0.0.0.0', port=5000)
