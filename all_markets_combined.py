@@ -356,7 +356,7 @@ def get_data():
 @app.route('/')
 def index():
     df = get_data()
-    return render_template('supported_file.htm', tables=[df.to_html(classes='table table-bordered', header=True, index=False, justify='center')])
+    return render_template('supported_file.html', tables=[df.to_html(classes='table table-bordered', header=True, index=False, justify='center')])
 
 if __name__ == '__main__':
     app.run(debug=True)
