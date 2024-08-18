@@ -356,30 +356,7 @@ def get_data():
 @app.route('/')
 def index():
     df = get_data()
-    return render_template('index.html', tables=[the_final_resulted_df.to_html(classes='table table-bordered', header=True, index=False, justify='center')])
+    return render_template('supported_file.htm', tables=[df.to_html(classes='table table-bordered', header=True, index=False, justify='center')])
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-######################################################################################## displaying the result in a page  ##################################################################################################
-# html_table = the_final_resulted_df.to_html(classes='wikitable', index=False)
-
-# with open("supported_file.htm", "w") as file:
-#     file.write(f"""
-#     <!DOCTYPE html>
-#     <html lang="en">
-#     <head>
-#         <meta charset="UTF-8">
-#         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-#         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css">
-#         <title>Data Table</title>
-#     </head>
-#     <body>
-#         <div class="container mt-5">
-#             <h1>Data Table</h1>
-#             {html_table}
-#         </div>
-#     </body>
-#     </html>
-#     """)
-
