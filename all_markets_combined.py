@@ -5,9 +5,10 @@ from pandas import json_normalize
 import json
 from urllib.request import urlopen
 import numpy as np
-from flask import Flask, render_template
 import streamlit as st
-app = Flask(__name__)
+
+
+
 #################################################################################    KSA        ########################################################################################################
 
 # main_saudi_stocks
@@ -18,7 +19,7 @@ data_main_saudi_stocks = data_main_saudi_stocks['data']
 whole_df_main_saudi_stocks = json_normalize(data_main_saudi_stocks)
 whole_df_main_saudi_stocks["market_type"] = "الأسهم - السوق الرئيسية"
 whole_df_main_saudi_stocks["market"] = "السوق السعودي"
-summary_df_main_saudi_stocks = whole_df_main_saudi_stocks[["companyUrl", "acrynomName",  "companyRef","lastTradePrice","market","market_type"]]
+summary_df_main_saudi_stocks = whole_df_main_saudi_stocks[["acrynomName",  "companyRef","lastTradePrice","market","market_type"]]
 
 # saudi_funds
 url_saudi_funds = "https://www.saudiexchange.sa/wps/portal/saudiexchange/ourmarkets/funds-market-watch/mutual-funds/!ut/p/z1/lc9NDoIwFATgs3AA06Ha0m0jCKJYSkWxG9OVaaJojPH8EncEf9_uJd8kM8SShtjW3f3B3fy5dcfu31m-Z5KDZgJKJVEEPVurcBMmdFJxsu0DUaQceiW1ohEDDCX2rzxMyTpQFuMlKqTgv-Xx5iS-522fiDiedmQhshyKIg8HYDixD15seIIPJY27ksuprhv4-UgGwQPkM992/p0/IZ7_5A602H80OOMQC0604RU6VD1067=CZ6_5A602H80OOE770QFTO1V1E24R6=NJgetMutualFundsData=/"
@@ -28,8 +29,7 @@ data_saudi_funds = data_saudi_funds['data']
 whole_df_saudi_funds = json_normalize(data_saudi_funds)
 whole_df_saudi_funds["market_type"] = "صناديق"
 whole_df_saudi_funds["market"] = "السوق السعودي"
-whole_df_saudi_funds["sectorName"] = "-"
-summary_df_saudi_funds = whole_df_saudi_funds[["companyUrl", "fundName",  "fundCode",  "unitPrice","market","market_type"]]
+summary_df_saudi_funds = whole_df_saudi_funds[["fundName",  "symbol",  "unitPrice","market","market_type"]]
 
 
 # parallel_saudi_stocks
@@ -40,7 +40,7 @@ data_parallel_saudi_stocks = data_parallel_saudi_stocks['data']
 whole_df_parallel_saudi_stocks = json_normalize(data_parallel_saudi_stocks)
 whole_df_parallel_saudi_stocks["market_type"] = "الأسهم - السوق الموازية"
 whole_df_parallel_saudi_stocks["market"] = "السوق السعودي"
-summary_df_parallel_saudi_stocks = whole_df_parallel_saudi_stocks[["companyUrl", "acrynomName",  "companyRef","lastTradePrice","market","market_type"]]
+summary_df_parallel_saudi_stocks = whole_df_parallel_saudi_stocks[["acrynomName",  "companyRef","lastTradePrice","market","market_type"]]
 
 # saudi_bonds_and_sukuk
 url_saudi_bonds_and_sukuk = "https://www.saudiexchange.sa/wps/portal/saudiexchange/ourmarkets/sukuk-market-watch/!ut/p/z1/lZBBb4JAEIV_iweuzAuG7cbbpkSNVoESAu6lwQZXEmDNssrfL2lPom11bjP5vuTNI0k5yba4VKqwlW6Leth3kn34gsFbcoQ8CF4Rz9d8uULoIWCUjYDNgiHeijj0Xnwg8Ug-5SOJ_AGINtM3vGMB9piPX0bgf1-OkNsProE7Eb-BPzKsSKpa73_6FO1-yhVJUx5KUxr3bIbz0dpTN3PgoO97V2mt6tL91I2De8pRd5bya5KSwtCpSdMcVdRk3HIxmXwBPTPbCA!!/p0/IZ7_5A602H80OOMQC0604RU6VD1091=CZ6_5A602H80O8DDC0QFK8HJ0O20D6=NJgetSukukMarketDetails=/?sectorParameter=all&iswatchListSelected=NO&requestLocale=ar&_=1710619264360"
@@ -50,14 +50,12 @@ data_saudi_bonds_and_sukuk = data_saudi_bonds_and_sukuk['data']
 whole_df_saudi_bonds_and_sukuk = json_normalize(data_saudi_bonds_and_sukuk)
 whole_df_saudi_bonds_and_sukuk["market_type"] = "الصكوك و السندات"
 whole_df_saudi_bonds_and_sukuk["market"] = "السوق السعودي"
-whole_df_saudi_funds["sectorName"] = "-"
-summary_df_saudi_bonds_and_sukuk = whole_df_saudi_bonds_and_sukuk[["cUrl", "issuerName", "symbol", "lastTradePrice", "market","market_type"]]
+summary_df_saudi_bonds_and_sukuk = whole_df_saudi_bonds_and_sukuk[["issuerName", "symbol", "lastTradePrice", "market","market_type"]]
 
 
 #### renaming the colmns names for all DFs  ################
 
 summary_df_main_saudi_stocks = summary_df_main_saudi_stocks.rename(columns={
-    "companyUrl" : "الرابط",
     "acrynomName" : "الاسم",
     "companyRef" : "الرمز",
     "lastTradePrice" : "آخر سعر" ,
@@ -65,15 +63,13 @@ summary_df_main_saudi_stocks = summary_df_main_saudi_stocks.rename(columns={
     "market_type" : "نوع الجهة"
 })
 summary_df_saudi_funds = summary_df_saudi_funds.rename(columns={
-    "companyUrl" : "الرابط",
     "fundName" : "الاسم",
-    "fundCode" : "الرمز",
+    "symbol" : "الرمز",
     "unitPrice" : "آخر سعر" ,
     "market" : "السوق",
     "market_type" : "نوع الجهة"
 })
 summary_df_parallel_saudi_stocks = summary_df_parallel_saudi_stocks.rename(columns={
-    "companyUrl" : "الرابط",
     "acrynomName" : "الاسم",
     "companyRef" : "الرمز",
     "lastTradePrice" : "آخر سعر" ,
@@ -81,7 +77,6 @@ summary_df_parallel_saudi_stocks = summary_df_parallel_saudi_stocks.rename(colum
     "market_type" : "نوع الجهة"
 })
 summary_df_saudi_bonds_and_sukuk = summary_df_saudi_bonds_and_sukuk.rename(columns={
-    "cUrl" : "الرابط",
     "issuerName" : "الاسم",
     "symbol" : "الرمز",
     "lastTradePrice" : "آخر سعر" ,
@@ -90,8 +85,9 @@ summary_df_saudi_bonds_and_sukuk = summary_df_saudi_bonds_and_sukuk.rename(colum
 })
 
 #### combining all DFs  from saudi markets ################
-
 summary_combined_all_saudi_dfs = pd.concat([summary_df_main_saudi_stocks,summary_df_saudi_funds,summary_df_parallel_saudi_stocks,summary_df_saudi_bonds_and_sukuk])
+summary_combined_all_saudi_dfs["الدولة"] =  "السعودية"
+
 
 
 
@@ -223,8 +219,7 @@ data_dubai_market_for_prices = response_dubai_market_for_prices.json()
 extract_from_data_dubai_market_for_prices = data_dubai_market_for_prices[0]['data']
 whole_df_dubai_market_for_prices = pd.DataFrame(extract_from_data_dubai_market_for_prices)
 whole_df_dubai_market_for_prices["market"] = "سوق دبي المالي - DFM"
-whole_df_dubai_market_for_prices["cUrl"] = ""
-summary_df_dubai_market_for_prices = whole_df_dubai_market_for_prices[["cUrl", "id", "lastradeprice", "market"]]
+summary_df_dubai_market_for_prices = whole_df_dubai_market_for_prices[["id", "lastradeprice", "market"]]
 
 # Merge DataFrames
 summary_of_2DFs_dubai_market = pd.merge(
@@ -234,7 +229,7 @@ summary_of_2DFs_dubai_market = pd.merge(
     how="left"
 )
 
-summary_of_2DFs_dubai_market = summary_of_2DFs_dubai_market[["cUrl", "fullName", "id", "lastradeprice", "market", "securityType"]]
+summary_of_2DFs_dubai_market = summary_of_2DFs_dubai_market[["fullName", "id", "lastradeprice", "market", "securityType"]]
 
 #######################################
 
@@ -248,8 +243,7 @@ whole_df_abu_dhabi_market = json_normalize(data_abu_dhabi_market)
 whole_df_abu_dhabi_market["market"] =  "سوق أبو ظبي المالي - ADX"
 whole_df_abu_dhabi_market["market_type"] = "الأسهم - السوق الرئيسية"
 
-whole_df_abu_dhabi_market["cUrl"] = ""
-summary_df_abu_dhabi_market = whole_df_abu_dhabi_market[["cUrl", "ARBCOMPANYNAME", "Symbol", "Last",  "market", "SectorArb"]]
+summary_df_abu_dhabi_market = whole_df_abu_dhabi_market[["ARBCOMPANYNAME", "Symbol", "Last",  "market"]]
 
 #this step for renaming the abo dhabai df to be matching the dubai df
 summary_df_abu_dhabi_market = summary_df_abu_dhabi_market.rename(columns={
@@ -272,11 +266,9 @@ whole_df_abu_dhabi_market["SectorArb"] = np.where(
     "الأسهم - السوق الرئيسية",
     "آخر"
 )
-  
 
 
-whole_df_abu_dhabi_market["cUrl"] = ""
-summary_df_abu_dhabi_market = whole_df_abu_dhabi_market[["cUrl", "ARBCOMPANYNAME", "Symbol", "Last",  "market", "SectorArb"]]
+summary_df_abu_dhabi_market = whole_df_abu_dhabi_market[["ARBCOMPANYNAME", "Symbol", "Last",  "market"]]
 
 #this step for renaming the abo dhabai df to be matching the dubai df
 summary_df_abu_dhabi_market = summary_df_abu_dhabi_market.rename(columns={
@@ -293,15 +285,15 @@ summary_df_abu_dhabi_market = summary_df_abu_dhabi_market.rename(columns={
 # Combined data for UAE markets
 
 summary_df_of_UAE_dubai_and_abu_dhabi = pd.concat([summary_df_abu_dhabi_market,summary_of_2DFs_dubai_market])
-
 summary_df_of_UAE_dubai_and_abu_dhabi = summary_df_of_UAE_dubai_and_abu_dhabi.rename(columns={
-    "cUrl" : "الرابط",
     "fullName" : "الاسم",
     "id" : "الرمز",
     "lastradeprice" : "آخر سعر" ,
     "market" : "السوق",
     "securityType" : "نوع الجهة"
 })
+summary_df_of_UAE_dubai_and_abu_dhabi["الدولة"] =  "الإمارات"
+
 
 
 #################################################################################    QATAR        ########################################################################################################
@@ -332,38 +324,51 @@ response_qatar_markets = requests.request("POST", url_qatar_markets, headers=hea
 data_qatar_markets = response_qatar_markets.json()
 whole_df_qatar_market = pd.DataFrame(data_qatar_markets['rows'])
 whole_df_qatar_market["market"] =  "سوق قطر المالي"
-whole_df_qatar_market["cUrl"] =  "-"
+
 
 whole_df_qatar_market.loc[whole_df_qatar_market["CompType"] == "COMP", "market_type"] = "الأسهم - السوق الرئيسية"
 whole_df_qatar_market.loc[whole_df_qatar_market["CompType"] == "BOND", "market_type"] = "الصكوك و السندات"
 whole_df_qatar_market.loc[whole_df_qatar_market["CompType"] == "ETF", "market_type"] = "صناديق"
 whole_df_qatar_market.loc[whole_df_qatar_market["CompType"] == "V", "market_type"] = "سوق الشركات الناشئة"
 
-summary_df_qatar_market = whole_df_qatar_market[["cUrl", "CompanyAR", "Symbol", "LastPrice",  "market", "market_type"]]
+summary_df_qatar_market = whole_df_qatar_market[["CompanyAR", "Symbol", "LastPrice",  "market", "market_type"]]
 
 summary_df_qatar_market = summary_df_qatar_market.rename(columns={
-    "cUrl" : "الرابط",
     "CompanyAR" : "الاسم",
     "Symbol" : "الرمز",
     "LastPrice" : "آخر سعر" ,
     "market" : "السوق",
     "market_type" : "نوع الجهة"
 })
+summary_df_qatar_market["الدولة"] =  "قطر "
+
 
 
 ######################################################################################## the_final_resulted_df  ###########################################################################################################
 the_final_resulted_df = pd.concat([summary_combined_all_saudi_dfs,summary_df_of_UAE_dubai_and_abu_dhabi,summary_df_qatar_market])
 
+the_final_resulted_df['الرمز'] = the_final_resulted_df['الرمز'].astype(str)
+the_final_resulted_df['آخر سعر'] = the_final_resulted_df['آخر سعر'].astype(float)
 
-######################################################################################## showing_the_final_resulted_df_at_web_page  ###########################################################################################################
-st.dataframe(the_final_resulted_df)
+######################################################################################## displaying the result in a page  ##################################################################################################
+html_table = the_final_resulted_df.to_html(classes='wikitable', index=False)
 
-# @app.route('/')
-# def home():
-#     # تحويل الداتا فرام إلى HTML
-#     table_html = the_final_resulted_df.to_html(classes='table table-striped', index=False)
-#     # تمرير الجدول إلى قالب HTML
-#     return render_template('table.html', table_html=table_html)
+with open("supported_file.htm", "w") as file:
+    file.write(f"""
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css">
+        <title>Data Table</title>
+    </head>
+    <body>
+        <div class="container mt-5">
+            <h1>Data Table</h1>
+            {html_table}
+        </div>
+    </body>
+    </html>
+    """)
 
-# if __name__ == '__main__':
-#     app.run(host='0.0.0.0', port=5000)
