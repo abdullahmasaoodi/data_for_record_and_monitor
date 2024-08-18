@@ -5,8 +5,6 @@ from pandas import json_normalize
 import json
 from urllib.request import urlopen
 import numpy as np
-import streamlit as st
-
 
 
 #################################################################################    KSA        ########################################################################################################
