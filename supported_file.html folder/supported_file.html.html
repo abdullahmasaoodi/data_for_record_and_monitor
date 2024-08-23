@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet"
+                href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css">
+        <title>بيانات السوق الرسمية</title>
+</head>
+
+<body dir="rtl">
+        <div class="container mt-5">
+                <h1>يتم جلب بيانات الجدول أدناه من مصادر السوق الرسمية</h1>
+                <ul>
+                        <li>السوق السعودي للأسهم السعودية: <a
+                                        href="https://www.saudiexchange.sa/wps/portal/saudiexchange/ourmarkets/main-market-watch?locale=ar"
+                                        target="_blank">اضغط هنا</a></li>
+                        <li>السوق السعودي للصناديق الاستثمارية: <a
+                                        href="https://www.saudiexchange.sa/wps/portal/saudiexchange/ourmarkets/funds-market-watch/mutual-funds/!ut/p/z1/lc9NDoIwFATgs3CCDlXabhtBEMVSEMRuTFekiaIL4_kl7hr8fbuXfJPMEEM6YgZ7d729uctgT-N_MOwYSQaaCSiVcA693KmwDRM6rxjZ-0AUKYPeSq0oj4CaEvNXHnUZjaAsZhtUSMF-y-PNSXzPG5-IOF6MZC2yHIoiDydgOtEHLzY8wYeS13PTdHCrXgbBAz-vp70!/dz/d5/L0lDUmlTUSEhL3dHa0FKRnNBLzROV3FpQSEhL2Fy/"
+                                        target="_blank">اضغط هنا</a></li>
+                        <li>السوق السعودي الموازي - نمو: <a
+                                        href="https://www.saudiexchange.sa/wps/portal/saudiexchange/ourmarkets/nomuc-market-watch?locale=ar"
+                                        target="_blank">اضغط هنا</a></li>
+                        <li>السوق السعودي الصكوك والسندات: <a
+                                        href="https://www.saudiexchange.sa/wps/portal/saudiexchange/ourmarkets/sukuk-market-watch?locale=ar"
+                                        target="_blank">اضغط هنا</a></li>
+                        <li>السوق الإماراتي - دبي: <a href="https://marketwatch.dfm.ae/ar" target="_blank">اضغط هنا</a>
+                        </li>
+                        <li>السوق الإماراتي - أبو ظبي - الأسهم الأساسي: <a
+                                        href="https://www.adx.ae/arabic/Pages/mw-main.aspx" target="_blank">اضغط هنا</a>
+                        </li>
+                        <li>السوق الإماراتي - أبو ظبي – صناديق الاستثمار: <a
+                                        href="https://www.adx.ae/arabic/Pages/mw-etf.aspx" target="_blank">اضغط هنا</a>
+                        </li>
+                        <li>السوق القطري: <a href="https://www.qe.com.qa/wp/mws/market/main" target="_blank">اضغط
+                                        هنا</a></li>
+                </ul>
+
+                <h2>البيانات</h2>
+                <div>
+                        {{ tables|safe }}
+                </div>
+        </div>
+</body>
+
+</html>
